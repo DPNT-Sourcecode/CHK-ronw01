@@ -33,7 +33,14 @@ public class CheckoutSolutionTest {
 
         // 50 + 30 + 20 + 15 + 80 - 30 = 165
         assertThat(checkoutSolution.checkout("ABCDEE"), equalTo(165));
+
+        // 3 A for 130
+        assertThat(checkoutSolution.checkout("AAA"), equalTo(130));
+
+        // 5 A for 200
+        assertThat(checkoutSolution.checkout("AAAAA"), equalTo(200));
     }
 }
+
 
 

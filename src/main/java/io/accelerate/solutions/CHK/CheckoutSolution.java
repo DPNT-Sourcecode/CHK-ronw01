@@ -36,9 +36,14 @@ public class CheckoutSolution {
         }
 
         // count sku A for offer eligible count
-        int skuAOfferEligibleCount = skuToCount.get('A')/3;
-        int skuAOfferNonEligibleCount = skuToCount.get('A')%3;
-        int totalA = skuAOfferEligibleCount * 130 + skuAOfferNonEligibleCount * 50;
+        // first count if we have 5 for 200 offer eligibility
+        int skuAOffer1EligibleCount = skuToCount.get('A')/5;
+        // need to check 3 for 130 eligibility on remaining count
+        int remainingCount = skuToCount.get('A')%5;
+        int skuAOffer2EligibleCount = remainingCount/3;
+        // remaining count not eligible for offer
+        int skuAOfferNonEligibleCount = remainingCount%3;
+        int totalA = skuAOffer1EligibleCount * 200 + skuAOffer2EligibleCount * 130 + skuAOfferNonEligibleCount * 50;
 
         // count sku B for offer eligible count
         int skuBOfferEligibleCount = skuToCount.get('B')/2;
@@ -56,6 +61,7 @@ public class CheckoutSolution {
         return totalA + totalB + totalC + totalD + totalE;
     }
 }
+
 
 
 
