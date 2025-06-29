@@ -45,39 +45,48 @@ public class CheckoutSolution {
             } else return -1;
         }
 
-        int skuEOfferEligibleCount = skuToCount.get('E')/2;
-        int currentSkuBCount = skuToCount.get('B');
+        int skuACount = skuToCount.get('A');
+        int skuBCount = skuToCount.get('B');
+        int skuCCount = skuToCount.get('C');
+        int skuDCount = skuToCount.get('D');
+        int skuECount = skuToCount.get('E');
+
+        // recalculate count of sku B due to sku E offer
+        int skuEOfferEligibleCount = skuECount/2;
+        int currentSkuBCount = skuBCount;
         currentSkuBCount -= skuEOfferEligibleCount;
         if (currentSkuBCount < 0) {
             currentSkuBCount = 0;
         }
-        skuToCount.put('B', currentSkuBCount);
+        skuBCount = currentSkuBCount;
+
 
         // count sku A for offer eligible count
         // first count if we have 5 for 200 offer eligibility
-        int skuAOffer1EligibleCount = skuToCount.get('A')/5;
-        // need to check 3 for 130 eligibility on remaining count
-        int remainingCount = skuToCount.get('A')%5;
+        int skuAOffer1EligibleCount = skuACount/5;
+        // check 3 for 130 eligibility on remaining count
+        int remainingCount = skuACount%5;
         int skuAOffer2EligibleCount = remainingCount/3;
         // remaining count not eligible for offer
         int skuAOfferNonEligibleCount = remainingCount%3;
         int totalA = skuAOffer1EligibleCount * skuAFiveForXOfferPrice + skuAOffer2EligibleCount * skuAThreeForXOfferPrice + skuAOfferNonEligibleCount * skuAUnitPrice;
 
         // count sku B for offer eligible count
-        int skuBOfferEligibleCount = skuToCount.get('B')/2;
-        int skuBOfferNonEligibleCount = skuToCount.get('B')%2;
+        int skuBOfferEligibleCount = skuBCount/2;
+        int skuBOfferNonEligibleCount = skuBCount%2;
         int totalB = skuBOfferEligibleCount * skuBTwoForXOfferPrice + skuBOfferNonEligibleCount * skuBUnitPrice;
 
         // sku C and D do not have offers available
-        int totalC = skuToCount.get('C') * skuCUnitPrice;
-        int totalD = skuToCount.get('D') * skuDUnitPrice;
+        int totalC = skuCCount * skuCUnitPrice;
+        int totalD = skuDCount * skuDUnitPrice;
 
         // total cost of sku E
-        int totalE = skuToCount.get('E') * skuEUnitPrice;
+        int totalE = skuECount * skuEUnitPrice;
 
         // return total
         return totalA + totalB + totalC + totalD + totalE;
     }
 }
+
 
 
