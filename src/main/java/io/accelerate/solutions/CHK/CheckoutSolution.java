@@ -87,6 +87,3 @@ public class CheckoutSolution {
         return totalA + totalB + totalC + totalD + totalE;
     }
 }
-
-
-
