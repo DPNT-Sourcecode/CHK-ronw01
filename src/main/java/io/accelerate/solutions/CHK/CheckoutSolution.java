@@ -12,6 +12,7 @@ public class CheckoutSolution {
         skuToCount.put('B', 0);
         skuToCount.put('C', 0);
         skuToCount.put('D', 0);
+        skuToCount.put('E', 0);
 
         // count each sku
         for (int i = 0; i < skus.length(); i++) {
@@ -28,6 +29,9 @@ public class CheckoutSolution {
             } else if (c=='D') {
                 int currentCount = skuToCount.get('D');
                 skuToCount.put('D', ++currentCount);
+            } else if (c=='E') {
+                int currentCount = skuToCount.get('E');
+                skuToCount.put('E', ++currentCount);
             } else return -1;
         }
 
@@ -45,9 +49,13 @@ public class CheckoutSolution {
         int totalC = skuToCount.get('C') * 20;
         int totalD = skuToCount.get('D') * 15;
 
+        int skuEOfferEligibleCount = skuToCount.get('E')/2;
+        int totalE = skuToCount.get('E') * 40 - skuEOfferEligibleCount * 30;
+
         // return total
-        return totalA + totalB + totalC + totalD;
+        return totalA + totalB + totalC + totalD + totalE;
     }
 }
+
 
 
