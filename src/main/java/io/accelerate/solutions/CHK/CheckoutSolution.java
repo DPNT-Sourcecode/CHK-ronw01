@@ -90,7 +90,7 @@ public class CheckoutSolution {
         int totalE = skuECount * skuEUnitPrice;
 
         // account for 2F get 1 F free
-        if(skuFCount%3 == 0) {
+        if(skuFCount/3 >= 1) {
             skuFCount -= skuFCount/3;
         }
         int totalF = skuFCount * skuFUnitPrice;
@@ -99,4 +99,5 @@ public class CheckoutSolution {
         return totalA + totalB + totalC + totalD + totalE + totalF;
     }
 }
+
 
