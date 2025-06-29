@@ -45,6 +45,14 @@ public class CheckoutSolution {
             } else return -1;
         }
 
+        int skuEOfferEligibleCount = skuToCount.get('E')/2;
+        int currentSkuBCount = skuToCount.get('B');
+        currentSkuBCount -= skuEOfferEligibleCount;
+        if (currentSkuBCount < 0) {
+            currentSkuBCount = 0;
+        }
+        skuToCount.put('B', currentSkuBCount);
+
         // count sku A for offer eligible count
         // first count if we have 5 for 200 offer eligibility
         int skuAOffer1EligibleCount = skuToCount.get('A')/5;
@@ -64,13 +72,12 @@ public class CheckoutSolution {
         int totalC = skuToCount.get('C') * skuCUnitPrice;
         int totalD = skuToCount.get('D') * skuDUnitPrice;
 
-        int skuEOfferEligibleCount = skuToCount.get('E')/2;
-        // total cost of sku E minus offer of "free B for every 2 E"
-        // Math.min(Math.min(skuEOfferEligibleCount, skuToCount.get('B'))) in case we have less Bs than eligible E count
-        int totalE = skuToCount.get('E') * skuEUnitPrice - Math.min(skuEOfferEligibleCount, skuToCount.get('B')) * skuBUnitPrice;
+        // total cost of sku E
+        int totalE = skuToCount.get('E') * skuEUnitPrice;
 
         // return total
         return totalA + totalB + totalC + totalD + totalE;
     }
 }
+
 

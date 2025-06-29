@@ -49,7 +49,10 @@ public class CheckoutSolutionTest {
         assertThat(checkoutSolution.checkout("EE"), equalTo(80));
 
         assertThat(checkoutSolution.checkout("EEEEBB"), equalTo(160));
+        assertThat(checkoutSolution.checkout("BEBEEE"), equalTo(160));
+
     }
 }
+
 
 
