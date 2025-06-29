@@ -17,37 +17,11 @@ public class CheckoutSolution {
     private static final int skuBTwoForXOfferPrice = 45;
 
     public Integer checkout(String skus) {
-        // create hashmap to store sku to count map and initialize with zero values
-        HashMap<Character, Integer> skuToCount = new HashMap<>();
-        skuToCount.put('A', 0);
-        skuToCount.put('B', 0);
-        skuToCount.put('C', 0);
-        skuToCount.put('D', 0);
-        skuToCount.put('E', 0);
-        skuToCount.put('F', 0);
-
-        // count each sku
-        for (int i = 0; i < skus.length(); i++) {
-            char c = skus.charAt(i);
-            if (c == 'A') {
-                int currentCount = skuToCount.get('A');
-                skuToCount.put('A', ++currentCount);
-            } else if (c=='B') {
-                int currentCount = skuToCount.get('B');
-                skuToCount.put('B', ++currentCount);
-            } else if (c=='C') {
-                int currentCount = skuToCount.get('C');
-                skuToCount.put('C', ++currentCount);
-            } else if (c=='D') {
-                int currentCount = skuToCount.get('D');
-                skuToCount.put('D', ++currentCount);
-            } else if (c=='E') {
-                int currentCount = skuToCount.get('E');
-                skuToCount.put('E', ++currentCount);
-            } else if (c=='F') {
-                int currentCount = skuToCount.get('F');
-                skuToCount.put('F', ++currentCount);
-            } else return -1;
+        HashMap<Character, Integer> skuToCount;
+        try {
+            skuToCount = countSkus(skus);
+        } catch (IllegalArgumentException e) {
+            return -1;
         }
 
         int skuACount = skuToCount.get('A');
@@ -56,6 +30,8 @@ public class CheckoutSolution {
         int skuDCount = skuToCount.get('D');
         int skuECount = skuToCount.get('E');
         int skuFCount = skuToCount.get('F');
+
+        applyOffers(skuToCount);
 
         // recalculate count of sku B due to sku E offer
         int skuEOfferEligibleCount = skuECount/2;
@@ -98,4 +74,55 @@ public class CheckoutSolution {
         // return total
         return totalA + totalB + totalC + totalD + totalE + totalF;
     }
+
+//    private void createOffers(HashMap<Character, Integer> skuToCount) {
+//        // create offers for all eligible skus
+//        HashMap<Character, Runnable> skuToOffers = new HashMap<>();
+//        skuToOffers.put('A', offersForSkuA)
+//    }
+
+
+
+    private void applyOffers(HashMap<Character, Integer> skuToCount) {
+        // apply offers for all eligible skus
+
+    }
+
+    private HashMap<Character, Integer> countSkus(String skus) {
+        // create hashmap to store sku to count map and initialize with zero values
+        HashMap<Character, Integer> skuToCount = new HashMap<>();
+        skuToCount.put('A', 0);
+        skuToCount.put('B', 0);
+        skuToCount.put('C', 0);
+        skuToCount.put('D', 0);
+        skuToCount.put('E', 0);
+        skuToCount.put('F', 0);
+
+        // count each sku
+        for (int i = 0; i < skus.length(); i++) {
+            char c = skus.charAt(i);
+            if (c == 'A') {
+                int currentCount = skuToCount.get('A');
+                skuToCount.put('A', ++currentCount);
+            } else if (c=='B') {
+                int currentCount = skuToCount.get('B');
+                skuToCount.put('B', ++currentCount);
+            } else if (c=='C') {
+                int currentCount = skuToCount.get('C');
+                skuToCount.put('C', ++currentCount);
+            } else if (c=='D') {
+                int currentCount = skuToCount.get('D');
+                skuToCount.put('D', ++currentCount);
+            } else if (c=='E') {
+                int currentCount = skuToCount.get('E');
+                skuToCount.put('E', ++currentCount);
+            } else if (c=='F') {
+                int currentCount = skuToCount.get('F');
+                skuToCount.put('F', ++currentCount);
+            } else throw new IllegalArgumentException();
+        }
+
+        return skuToCount;
+    }
 }
+
