@@ -10,6 +10,7 @@ public class CheckoutSolution {
     private static final int skuCUnitPrice = 20;
     private static final int skuDUnitPrice = 15;
     private static final int skuEUnitPrice = 40;
+    private static final int skuFUnitPrice = 10;
 
     private static final int skuAFiveForXOfferPrice = 200;
     private static final int skuAThreeForXOfferPrice = 130;
@@ -23,6 +24,7 @@ public class CheckoutSolution {
         skuToCount.put('C', 0);
         skuToCount.put('D', 0);
         skuToCount.put('E', 0);
+        skuToCount.put('F', 0);
 
         // count each sku
         for (int i = 0; i < skus.length(); i++) {
@@ -42,6 +44,9 @@ public class CheckoutSolution {
             } else if (c=='E') {
                 int currentCount = skuToCount.get('E');
                 skuToCount.put('E', ++currentCount);
+            } else if (c=='F') {
+                int currentCount = skuToCount.get('F');
+                skuToCount.put('F', ++currentCount);
             } else return -1;
         }
 
@@ -50,6 +55,7 @@ public class CheckoutSolution {
         int skuCCount = skuToCount.get('C');
         int skuDCount = skuToCount.get('D');
         int skuECount = skuToCount.get('E');
+        int skuFCount = skuToCount.get('F');
 
         // recalculate count of sku B due to sku E offer
         int skuEOfferEligibleCount = skuECount/2;
@@ -83,7 +89,14 @@ public class CheckoutSolution {
         // total cost of sku E
         int totalE = skuECount * skuEUnitPrice;
 
+        // account for 2F get 1 F free
+        if(skuFCount%3 == 0) {
+            skuFCount -= skuFCount/3;
+        }
+        int totalF = skuFCount * skuFUnitPrice;
+
         // return total
-        return totalA + totalB + totalC + totalD + totalE;
+        return totalA + totalB + totalC + totalD + totalE + totalF;
     }
 }
+
