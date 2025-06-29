@@ -45,5 +45,8 @@ public class CheckoutSolutionTest {
 
         // 15 As should count as 3 times 5 for 200, because it's the most cost-effective
         assertThat(checkoutSolution.checkout("AAAAAAAAAAAAAAA"), equalTo(600));
+
+        assertThat(checkoutSolution.checkout("EE"), equalTo(80));
     }
 }
+
