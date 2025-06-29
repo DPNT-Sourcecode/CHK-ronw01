@@ -6,43 +6,48 @@ import java.util.HashMap;
 
 public class CheckoutSolution {
     public Integer checkout(String skus) {
+        // create hashmap to store sku to count map and initialize with zero values
         HashMap<Character, Integer> skuToCount = new HashMap<>();
         skuToCount.put('A', 0);
         skuToCount.put('B', 0);
         skuToCount.put('C', 0);
         skuToCount.put('D', 0);
+
+        // count each sku
         for (int i = 0; i < skus.length(); i++) {
             char c = skus.charAt(i);
             if (c == 'A') {
                 int currentCount = skuToCount.get('A');
                 skuToCount.put('A', ++currentCount);
-//                skuToCount.compute('A', (k, currentCount) -> currentCount);
             } else if (c=='B') {
                 int currentCount = skuToCount.get('B');
                 skuToCount.put('B', ++currentCount);
-//                skuToCount.compute('B', (k, currentCount) -> currentCount);
             } else if (c=='C') {
                 int currentCount = skuToCount.get('C');
                 skuToCount.put('C', ++currentCount);
-//                skuToCount.compute('C', (k, currentCount) -> currentCount);
             } else if (c=='D') {
                 int currentCount = skuToCount.get('D');
                 skuToCount.put('D', ++currentCount);
-//                skuToCount.compute('D', (k, currentCount) -> currentCount);
             } else return -1;
         }
+
+        // count sku A for offer eligible count
         int skuAOfferEligibleCount = skuToCount.get('A')/3;
         int skuAOfferNonEligibleCount = skuToCount.get('A')%3;
         int totalA = skuAOfferEligibleCount * 130 + skuAOfferNonEligibleCount * 50;
 
+        // count sku B for offer eligible count
         int skuBOfferEligibleCount = skuToCount.get('B')/2;
         int skuBOfferNonEligibleCount = skuToCount.get('B')%2;
         int totalB = skuBOfferEligibleCount * 45 + skuBOfferNonEligibleCount * 30;
 
+        // sku C and D do not have offers available
         int totalC = skuToCount.get('C') * 20;
         int totalD = skuToCount.get('D') * 15;
 
+        // return total
         return totalA + totalB + totalC + totalD;
     }
 }
+
 

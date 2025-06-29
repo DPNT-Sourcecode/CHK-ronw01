@@ -18,5 +18,15 @@ public class CheckoutSolutionTest {
     public void checkout_test() {
         // 3 As for 130 + 2 Bs for 45 + 1 C + 1 D = 210
         assertThat(checkoutSolution.checkout("AAABBCD"), equalTo(210));
+
+        // 50 + 30 + 20 + 15 = 115
+        assertThat(checkoutSolution.checkout("ABCD"), equalTo(115));
+
+        // 100 + 45 + 30 = 175
+        assertThat(checkoutSolution.checkout("AABBDD"), equalTo(175));
+
+        // input contains invalid sku
+        assertThat(checkoutSolution.checkout("ABXD"), equalTo(-1));
     }
 }
+
