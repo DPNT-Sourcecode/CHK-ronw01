@@ -65,10 +65,12 @@ public class CheckoutSolution {
         int totalD = skuToCount.get('D') * skuDUnitPrice;
 
         int skuEOfferEligibleCount = skuToCount.get('E')/2;
-        // total cost of sku E minus offer
-        int totalE = skuToCount.get('E') * skuEUnitPrice - skuEOfferEligibleCount * skuBUnitPrice;
+        // total cost of sku E minus offer of "free B for every 2 E"
+        // Math.min(Math.min(skuEOfferEligibleCount, skuToCount.get('B'))) in case we have less Bs than eligible E count
+        int totalE = skuToCount.get('E') * skuEUnitPrice - Math.min(skuEOfferEligibleCount, skuToCount.get('B')) * skuBUnitPrice;
 
         // return total
         return totalA + totalB + totalC + totalD + totalE;
     }
 }
+
