@@ -20,4 +20,3 @@ public class CheckoutSolutionTest {
         assertThat(checkoutSolution.checkout("AAABBCD"), equalTo(210));
     }
 }
-

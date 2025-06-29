@@ -10,7 +10,9 @@ public class CheckoutSolution {
         for (int i = 0; i<skus.length(); i++) {
             char c = skus.charAt(i);
             if (c == 'A') {
-                skuToCount.compute('A', (k, currentCount) -> currentCount);
+                int currentCount = skuToCount.get('A');
+                skuToCount.put('A', ++currentCount);
+//                skuToCount.compute('A', (k, currentCount) -> currentCount);
             } else if (c=='B') {
                 skuToCount.compute('B', (k, currentCount) -> currentCount);
             } else if (c=='C') {
@@ -33,4 +35,3 @@ public class CheckoutSolution {
         return totalA + totalB + totalC + totalD;
     }
 }
-
