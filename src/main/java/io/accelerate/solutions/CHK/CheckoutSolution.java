@@ -1,10 +1,20 @@
 package io.accelerate.solutions.CHK;
 
-import io.accelerate.runner.SolutionNotImplementedException;
-
 import java.util.HashMap;
 
+
 public class CheckoutSolution {
+
+    private static final int skuAUnitPrice = 50;
+    private static final int skuBUnitPrice = 30;
+    private static final int skuCUnitPrice = 20;
+    private static final int skuDUnitPrice = 15;
+    private static final int skuEUnitPrice = 40;
+
+    private static final int skuAFiveForXOfferPrice = 200;
+    private static final int skuAThreeForXOfferPrice = 130;
+    private static final int skuBTwoForXOfferPrice = 45;
+
     public Integer checkout(String skus) {
         // create hashmap to store sku to count map and initialize with zero values
         HashMap<Character, Integer> skuToCount = new HashMap<>();
@@ -43,25 +53,22 @@ public class CheckoutSolution {
         int skuAOffer2EligibleCount = remainingCount/3;
         // remaining count not eligible for offer
         int skuAOfferNonEligibleCount = remainingCount%3;
-        int totalA = skuAOffer1EligibleCount * 200 + skuAOffer2EligibleCount * 130 + skuAOfferNonEligibleCount * 50;
+        int totalA = skuAOffer1EligibleCount * skuAFiveForXOfferPrice + skuAOffer2EligibleCount * skuAThreeForXOfferPrice + skuAOfferNonEligibleCount * skuAUnitPrice;
 
         // count sku B for offer eligible count
         int skuBOfferEligibleCount = skuToCount.get('B')/2;
         int skuBOfferNonEligibleCount = skuToCount.get('B')%2;
-        int totalB = skuBOfferEligibleCount * 45 + skuBOfferNonEligibleCount * 30;
+        int totalB = skuBOfferEligibleCount * skuBTwoForXOfferPrice + skuBOfferNonEligibleCount * skuBUnitPrice;
 
         // sku C and D do not have offers available
-        int totalC = skuToCount.get('C') * 20;
-        int totalD = skuToCount.get('D') * 15;
+        int totalC = skuToCount.get('C') * skuCUnitPrice;
+        int totalD = skuToCount.get('D') * skuDUnitPrice;
 
         int skuEOfferEligibleCount = skuToCount.get('E')/2;
-        int totalE = skuToCount.get('E') * 40 - skuEOfferEligibleCount * 30;
+        // total cost of sku E minus offer
+        int totalE = skuToCount.get('E') * skuEUnitPrice - skuEOfferEligibleCount * skuBUnitPrice;
 
         // return total
         return totalA + totalB + totalC + totalD + totalE;
     }
 }
-
-
-
-

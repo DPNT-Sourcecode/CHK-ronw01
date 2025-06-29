@@ -47,7 +47,3 @@ public class CheckoutSolutionTest {
         assertThat(checkoutSolution.checkout("AAAAAAAAAAAAAAA"), equalTo(600));
     }
 }
-
-
-
-
