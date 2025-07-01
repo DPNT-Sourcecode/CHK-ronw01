@@ -1,6 +1,7 @@
 package io.accelerate.solutions.CHK;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class CheckoutSolution {
@@ -15,6 +16,22 @@ public class CheckoutSolution {
     private static final int skuAFiveForXOfferPrice = 200;
     private static final int skuAThreeForXOfferPrice = 130;
     private static final int skuBTwoForXOfferPrice = 45;
+
+    private final Map<Character, SKU> catalogue;
+
+    public CheckoutSolution() {
+        this.catalogue = initSkusWithOffers();
+    }
+
+    private Map<Character, SKU> initSkusWithOffers() {
+        Map<Character, SKU> catalogue = new HashMap<>();
+
+        catalogue.put('A',
+                new SKU('A', skuAUnitPrice));
+
+        return catalogue;
+    }
+
 
     public Integer checkout(String skus) {
         HashMap<Character, Integer> skuToCount;
@@ -125,3 +142,4 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
