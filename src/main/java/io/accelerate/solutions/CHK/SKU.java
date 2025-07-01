@@ -13,5 +13,11 @@ public class SKU {
         this.name = name;
         this.unitPrice = unitPrice;
     }
+
+    public SKU withOffer(Offer offer) {
+        offers.add(offer);
+        return this;
+    }
 }
+
 

@@ -3,15 +3,13 @@ package io.accelerate.solutions.CHK;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.accelerate.solutions.CHK.Constants.skuAUnitPrice;
+import static io.accelerate.solutions.CHK.Constants.skuBUnitPrice;
+
 
 public class CheckoutSolution {
 
-    private static final int skuAUnitPrice = 50;
-    private static final int skuBUnitPrice = 30;
-    private static final int skuCUnitPrice = 20;
-    private static final int skuDUnitPrice = 15;
-    private static final int skuEUnitPrice = 40;
-    private static final int skuFUnitPrice = 10;
+
 
     private static final int skuAFiveForXOfferPrice = 200;
     private static final int skuAThreeForXOfferPrice = 130;
@@ -27,7 +25,11 @@ public class CheckoutSolution {
         Map<Character, SKU> catalogue = new HashMap<>();
 
         catalogue.put('A',
-                new SKU('A', skuAUnitPrice));
+                new SKU('A', skuAUnitPrice)
+                        .withOffer(new Offer()));
+
+        catalogue.put('B',
+                new SKU('B', skuBUnitPrice));
 
         return catalogue;
     }
@@ -142,4 +144,5 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
 
