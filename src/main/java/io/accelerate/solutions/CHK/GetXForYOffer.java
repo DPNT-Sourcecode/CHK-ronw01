@@ -24,4 +24,3 @@ public class GetXForYOffer implements Offer{
         return X;
     }
 }
-

@@ -40,4 +40,3 @@ public class SKU {
         return false;
     }
 }
-
