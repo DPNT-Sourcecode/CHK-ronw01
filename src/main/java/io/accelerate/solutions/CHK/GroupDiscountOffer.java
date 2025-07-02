@@ -15,7 +15,8 @@ public class GroupDiscountOffer implements Offer{
 
     @Override
     public BigDecimal apply(Map<SKU, Integer> basket, SKU sku) {
-        boolean basketContainsGroupSkus = eligibleSkuGroup.stream().allMatch(basket::containsKey);
+        boolean basketContainsGroupSkus = eligibleSkuGroup.stream().allMatch(offerSku -> basket.keySet().stream().anyMatch(basketSku -> basketSku.getName() == offerSku));
+        System.out.println(basketContainsGroupSkus);
         if (basketContainsGroupSkus) {
             return groupPrice;
         }
@@ -27,4 +28,5 @@ public class GroupDiscountOffer implements Offer{
         return 0;
     }
 }
+
 
