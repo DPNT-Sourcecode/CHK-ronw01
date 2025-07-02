@@ -26,7 +26,7 @@ public class CheckoutSolutionTest {
         assertThat(checkoutSolution.checkout("AABBDD"), equalTo(175));
 
         // input contains invalid sku
-        assertThat(checkoutSolution.checkout("ABXD"), equalTo(-1));
+        assertThat(checkoutSolution.checkout("ABCDX?"), equalTo(-1));
 
         // 50 + 30 + 20 + 15 + 40 = 155
         assertThat(checkoutSolution.checkout("ABCDE"), equalTo(155));
@@ -57,3 +57,4 @@ public class CheckoutSolutionTest {
         assertThat(checkoutSolution.checkout("FFFF"), equalTo(30));
     }
 }
+
