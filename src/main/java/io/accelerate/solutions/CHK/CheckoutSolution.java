@@ -84,10 +84,12 @@ public class CheckoutSolution {
                         .withOffer(new FreeItemOffer(3, 'Q')));
 
         catalogue.put('S',
-                new SKU('S', skuSUnitPrice));
+                new SKU('S', skuSUnitPrice)
+                        .withOffer(new GroupDiscountOffer(List.of('S', 'T', 'X', 'Y', 'Z'), BigDecimal.valueOf(45))));
 
         catalogue.put('T',
-                new SKU('T', skuTUnitPrice));
+                new SKU('T', skuTUnitPrice)
+                        .withOffer(new GroupDiscountOffer(List.of('S', 'T', 'X', 'Y', 'Z'), BigDecimal.valueOf(45))));
 
         catalogue.put('U',
                 new SKU('U', skuUUnitPrice)
@@ -102,13 +104,16 @@ public class CheckoutSolution {
                 new SKU('W', skuWUnitPrice));
 
         catalogue.put('X',
-                new SKU('X', skuXUnitPrice));
+                new SKU('X', skuXUnitPrice)
+                        .withOffer(new GroupDiscountOffer(List.of('S', 'T', 'X', 'Y', 'Z'), BigDecimal.valueOf(45))));
 
         catalogue.put('Y',
-                new SKU('Y', skuYUnitPrice));
+                new SKU('Y', skuYUnitPrice)
+                        .withOffer(new GroupDiscountOffer(List.of('S', 'T', 'X', 'Y', 'Z'), BigDecimal.valueOf(45))));
 
         catalogue.put('Z',
-                new SKU('Z', skuZUnitPrice));
+                new SKU('Z', skuZUnitPrice)
+                        .withOffer(new GroupDiscountOffer(List.of('S', 'T', 'X', 'Y', 'Z'), BigDecimal.valueOf(45))));
 
         return catalogue;
     }
@@ -179,3 +184,4 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
