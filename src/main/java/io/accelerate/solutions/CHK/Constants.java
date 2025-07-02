@@ -31,4 +31,3 @@ public class Constants {
     public static final BigDecimal skuZUnitPrice = BigDecimal.valueOf(50);
 
 }
-

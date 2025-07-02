@@ -19,4 +19,3 @@ public class GetXForYOffer implements Offer{
         return Y.multiply(BigDecimal.valueOf(totalBundleCount));
     }
 }
-

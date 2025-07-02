@@ -27,8 +27,6 @@ public class FreeItemOffer implements Offer{
                 break;
             }
         }
-        return null;
+        return BigDecimal.ZERO; // free item offer just decrements eligible items from basket
     }
 }
-
-
