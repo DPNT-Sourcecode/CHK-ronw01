@@ -8,7 +8,7 @@ import static io.accelerate.solutions.CHK.Constants.*;
 
 public class CheckoutSolution {
 
-    private final Map<Character, SKU> catalogue;
+    private Map<Character, SKU> catalogue;
 
     public CheckoutSolution() {
         this.catalogue = initSkusWithOffers();
@@ -114,6 +114,8 @@ public class CheckoutSolution {
     }
 
     public Integer checkout(String skus) {
+        catalogue = initSkusWithOffers();
+
         Map<SKU, Integer> basket = countSkus(skus);
 
         if (basket==null) {
@@ -179,4 +181,5 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
 
