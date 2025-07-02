@@ -56,7 +56,7 @@ public class CheckoutSolution {
 
         catalogue.put('K',
                 new SKU('K', skuKUnitPrice)
-                        .withOffer(new GetXForYOffer(2, BigDecimal.valueOf(160))));
+                        .withOffer(new GetXForYOffer(2, BigDecimal.valueOf(150))));
 
         catalogue.put('L',
                 new SKU('L', skuLUnitPrice));
@@ -179,4 +179,5 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
 
