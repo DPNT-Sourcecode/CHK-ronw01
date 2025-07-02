@@ -8,11 +8,11 @@ import static io.accelerate.solutions.CHK.Constants.*;
 
 public class CheckoutSolution {
 
-    private Map<Character, SKU> catalogue;
+    private final Map<Character, SKU> catalogue;
 
-//    public CheckoutSolution() {
-//        this.catalogue = initSkusWithOffers();
-//    }
+    public CheckoutSolution() {
+        this.catalogue = initSkusWithOffers();
+    }
 
     private Map<Character, SKU> initSkusWithOffers() {
         Map<Character, SKU> catalogue = new HashMap<>();
@@ -114,8 +114,6 @@ public class CheckoutSolution {
     }
 
     public Integer checkout(String skus) {
-        catalogue = initSkusWithOffers();
-
         Map<SKU, Integer> basket = countSkus(skus);
 
         if (basket==null) {
@@ -158,7 +156,7 @@ public class CheckoutSolution {
                 e1.getKey().hasFreeItemsOffer()
         ));
 
-        Map<SKU, Integer> sortedBasket = new HashMap<>();
+        Map<SKU, Integer> sortedBasket = new LinkedHashMap<>(); // use LinkedHashMap to maintain ordering
         for(Map.Entry<SKU, Integer> basketSku: basketSkusList) {
             sortedBasket.put(basketSku.getKey(), basketSku.getValue());
         }
@@ -181,3 +179,4 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
