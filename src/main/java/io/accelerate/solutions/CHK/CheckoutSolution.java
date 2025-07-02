@@ -10,9 +10,9 @@ public class CheckoutSolution {
 
     private Map<Character, SKU> catalogue;
 
-    public CheckoutSolution() {
-        this.catalogue = initSkusWithOffers();
-    }
+//    public CheckoutSolution() {
+//        this.catalogue = initSkusWithOffers();
+//    }
 
     private Map<Character, SKU> initSkusWithOffers() {
         Map<Character, SKU> catalogue = new HashMap<>();
@@ -181,5 +181,6 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
 
 
