@@ -18,4 +18,10 @@ public class GetXForYOffer implements Offer{
         basket.put(sku, basket.get(sku)%X); // update sku count with remaining quantity as offers are applied
         return Y.multiply(BigDecimal.valueOf(totalBundleCount));
     }
+
+    @Override
+    public int getBundleSize() {
+        return X;
+    }
 }
+

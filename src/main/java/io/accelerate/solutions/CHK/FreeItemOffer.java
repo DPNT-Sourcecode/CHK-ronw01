@@ -14,6 +14,9 @@ public class FreeItemOffer implements Offer{
 
     @Override
     public BigDecimal apply(Map<SKU, Integer> basket, SKU sku) {
+        if (sku.getName() == freeItem) {
+            int count = 
+        }
         int totalBundleCount = basket.get(sku)/eligibilityCount;
         // we need to find the existing count of free item in the basket and decrement it by bundle count
         for (Map.Entry<SKU, Integer> entry : basket.entrySet()) {
@@ -29,4 +32,10 @@ public class FreeItemOffer implements Offer{
         }
         return BigDecimal.ZERO; // free item offer just decrements eligible items from basket
     }
+
+    @Override
+    public int getBundleSize() {
+        return eligibilityCount;
+    }
 }
+

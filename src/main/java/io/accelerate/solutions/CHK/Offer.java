@@ -5,4 +5,6 @@ import java.util.Map;
 
 public interface Offer {
     BigDecimal apply(Map<SKU, Integer> basket, SKU sku);
+    int getBundleSize();
 }
+

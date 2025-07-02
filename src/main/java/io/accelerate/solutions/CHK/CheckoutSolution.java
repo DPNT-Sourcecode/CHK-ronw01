@@ -127,6 +127,9 @@ public class CheckoutSolution {
         for (Map.Entry<SKU, Integer> basketEntry : sortedBasket.entrySet()) {
             SKU sku = basketEntry.getKey();
             List<Offer> offers = sku.getOffers();
+            // prioritize offers with higher bundle count
+            // i.e apply '5 for 200' before '3 for 130'
+            offers.sort((o1, o2) -> Integer.compare(o2.getBundleSize(), o1.getBundleSize()));
 
             // apply all offers per sku
             for (Offer offer : offers) {
@@ -170,5 +173,6 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
 
 
