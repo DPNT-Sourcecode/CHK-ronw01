@@ -179,6 +179,3 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
-
-
-
