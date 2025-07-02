@@ -18,4 +18,17 @@ public class SKU {
         offers.add(offer);
         return this;
     }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public Character getName() {
+        return name;
+    }
 }
+
