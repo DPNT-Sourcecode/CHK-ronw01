@@ -1,10 +1,7 @@
 package io.accelerate.solutions.CHK;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.accelerate.solutions.CHK.Constants.*;
 
@@ -123,6 +120,14 @@ public class CheckoutSolution {
             return -1;
         }
 
+        // need to prioritize skus with free item offers !!!
+        List<Map.Entry<SKU, Integer>> basketSkusList = new ArrayList<>(basket.entrySet());
+        basketSkusList.sort((e1, e2) -> Boolean.compare(
+                e2.getKey().hasFreeItemsOffer(),
+                e1.getKey().hasFreeItemsOffer()
+        ));
+
+        
         BigDecimal totalBasketValue = BigDecimal.ZERO;
         for (Map.Entry<SKU, Integer> basketEntry : basket.entrySet()) {
             SKU sku = basketEntry.getKey();
@@ -198,3 +203,4 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+

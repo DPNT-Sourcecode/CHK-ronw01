@@ -30,4 +30,14 @@ public class SKU {
     public Character getName() {
         return name;
     }
+
+    public boolean hasFreeItemsOffer() {
+        for (Offer offer: offers) {
+            if (offer instanceof FreeItemOffer) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
+
