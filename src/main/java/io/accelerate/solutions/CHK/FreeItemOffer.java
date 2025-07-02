@@ -26,13 +26,16 @@ public class FreeItemOffer implements Offer{
             int totalBundleCount = basket.get(sku)/eligibilityCount;
             // we need to find the existing count of free item in the basket and decrement it by bundle count
             for (Map.Entry<SKU, Integer> entry : basket.entrySet()) {
-                if (entry.getKey().getName() == this.freeItem) {
+                if (entry.getKey().getName() == freeItem) {
+                    System.out.println( entry.getValue());
                     int freeItemCountInBasket = entry.getValue() - totalBundleCount;
                     // make sure we do not extract more than existing quantity of free item in the basket
                     if(freeItemCountInBasket < 0) {
                         freeItemCountInBasket = 0;
                     }
                     entry.setValue(freeItemCountInBasket);
+                    System.out.println(freeItemCountInBasket);
+                    System.out.println(totalBundleCount);
                     break;
                 }
             }
@@ -46,5 +49,6 @@ public class FreeItemOffer implements Offer{
         return eligibilityCount;
     }
 }
+
 
 
