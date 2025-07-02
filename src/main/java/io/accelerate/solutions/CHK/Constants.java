@@ -10,4 +10,3 @@ public class Constants {
     public static final BigDecimal skuEUnitPrice = BigDecimal.valueOf(40);
     public static final BigDecimal skuFUnitPrice = BigDecimal.valueOf(10);
 }
-

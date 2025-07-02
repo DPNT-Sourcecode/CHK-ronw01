@@ -19,5 +19,3 @@ public class SKU {
         return this;
     }
 }
-
-
