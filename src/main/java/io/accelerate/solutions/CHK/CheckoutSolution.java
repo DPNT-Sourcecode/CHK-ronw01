@@ -116,8 +116,12 @@ public class CheckoutSolution {
     public Integer checkout(String skus) {
         Map<SKU, Integer> basket = countSkus(skus);
 
-        if (basket.isEmpty()) {
+        if (basket==null) {
             return -1;
+        }
+
+        if (basket.isEmpty()) {
+            return 0;
         }
 
         // prioritize skus with free item offers
@@ -162,9 +166,12 @@ public class CheckoutSolution {
     private Map<SKU, Integer> countSkus(String skus) {
         // create hashmap to store sku to count map
         HashMap<SKU, Integer> skuToCount = new HashMap<>();
+        if (skus.isEmpty()) {
+            return Collections.emptyMap();
+        }
         for (char c: skus.toCharArray()) {
             if (c < 'A' || c > 'Z') {
-                return Collections.emptyMap();
+                return null;
             }
             skuToCount.put(catalogue.get(c), skuToCount.getOrDefault(catalogue.get(c), 0) + 1);
         }
@@ -172,3 +179,4 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
