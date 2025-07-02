@@ -136,11 +136,13 @@ public class CheckoutSolution {
                 BigDecimal offerValue = offer.apply(sortedBasket, sku);
                 totalBasketValue = totalBasketValue.add(offerValue);
             }
-
+            System.out.println(totalBasketValue);
             // if there are remaining quantity once all offers are applied, add them to total at regular unit price (i.e no offers)
             if (basketEntry.getValue() > 0) {
+                System.out.println("true");
                 totalBasketValue = totalBasketValue.add(sku.getUnitPrice().multiply(BigDecimal.valueOf(basketEntry.getValue())));
             }
+            System.out.println(totalBasketValue);
         }
 
         return totalBasketValue.intValue();
@@ -173,6 +175,7 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
 
 
 
