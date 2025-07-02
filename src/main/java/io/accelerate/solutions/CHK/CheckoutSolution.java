@@ -120,22 +120,17 @@ public class CheckoutSolution {
             return -1;
         }
 
-        // need to prioritize skus with free item offers !!!
-        List<Map.Entry<SKU, Integer>> basketSkusList = new ArrayList<>(basket.entrySet());
-        basketSkusList.sort((e1, e2) -> Boolean.compare(
-                e2.getKey().hasFreeItemsOffer(),
-                e1.getKey().hasFreeItemsOffer()
-        ));
+        // prioritize skus with free item offers
+        Map<SKU, Integer> sortedBasket = sortByFreeItemsOffer(basket);
 
-        
         BigDecimal totalBasketValue = BigDecimal.ZERO;
-        for (Map.Entry<SKU, Integer> basketEntry : basket.entrySet()) {
+        for (Map.Entry<SKU, Integer> basketEntry : sortedBasket.entrySet()) {
             SKU sku = basketEntry.getKey();
             List<Offer> offers = sku.getOffers();
 
             // apply all offers per sku
             for (Offer offer : offers) {
-                BigDecimal offerValue = offer.apply(basket, sku);
+                BigDecimal offerValue = offer.apply(sortedBasket, sku);
                 totalBasketValue = totalBasketValue.add(offerValue);
             }
 
@@ -145,49 +140,21 @@ public class CheckoutSolution {
             }
         }
 
-
-
-
-
-
-//        // recalculate count of sku B due to sku E offer
-//        int skuEOfferEligibleCount = skuECount/2;
-//        int currentSkuBCount = skuBCount;
-//        currentSkuBCount -= skuEOfferEligibleCount;
-//        if (currentSkuBCount < 0) {
-//            currentSkuBCount = 0;
-//        }
-//        skuBCount = currentSkuBCount;
-
-//        // count sku A for offer eligible count
-//        // first count if we have 5 for 200 offer eligibility
-//        int skuAOffer1EligibleCount = skuACount/5;
-//        // check 3 for 130 eligibility on remaining count
-//        int remainingCount = skuACount%5;
-//        int skuAOffer2EligibleCount = remainingCount/3;
-//        // remaining count not eligible for offer
-//        int skuAOfferNonEligibleCount = remainingCount%3;
-//        int totalA = skuAOffer1EligibleCount * skuAFiveForXOfferPrice + skuAOffer2EligibleCount * skuAThreeForXOfferPrice + skuAOfferNonEligibleCount * skuAUnitPrice;
-//
-//        // count sku B for offer eligible count
-//        int skuBOfferEligibleCount = skuBCount/2;
-//        int skuBOfferNonEligibleCount = skuBCount%2;
-//        int totalB = skuBOfferEligibleCount * skuBTwoForXOfferPrice + skuBOfferNonEligibleCount * skuBUnitPrice;
-//
-//        // sku C and D do not have offers available
-//        int totalC = skuCCount * skuCUnitPrice;
-//        int totalD = skuDCount * skuDUnitPrice;
-//
-//        // total cost of sku E
-//        int totalE = skuECount * skuEUnitPrice;
-//
-//        // account for 2F get 1 F free
-//        if(skuFCount/3 >= 1) {
-//            skuFCount -= skuFCount/3;
-//        }
-//        int totalF = skuFCount * skuFUnitPrice;
-
         return totalBasketValue.intValue();
+    }
+
+    private Map<SKU, Integer> sortByFreeItemsOffer(Map<SKU, Integer> basket) {
+        List<Map.Entry<SKU, Integer>> basketSkusList = new ArrayList<>(basket.entrySet());
+        basketSkusList.sort((e1, e2) -> Boolean.compare(
+                e2.getKey().hasFreeItemsOffer(),
+                e1.getKey().hasFreeItemsOffer()
+        ));
+
+        Map<SKU, Integer> sortedBasket = new HashMap<>();
+        for(Map.Entry<SKU, Integer> basketSku: basketSkusList) {
+            sortedBasket.put(basketSku.getKey(), basketSku.getValue());
+        }
+        return sortedBasket;
     }
 
     private Map<SKU, Integer> countSkus(String skus) {
@@ -203,4 +170,5 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
 
