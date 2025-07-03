@@ -65,7 +65,10 @@ public class CheckoutSolutionTest {
         assertThat(checkoutSolution.checkout("KK"), equalTo(120));
         // 50 + 30 + 45 = 125
         assertThat(checkoutSolution.checkout("ABXYZ"), equalTo(125));
+
+        // since all 5 are group discount eligible items, we need to select most expensive 3 for discount
+        // remaining 2 at regular unit price since it's the most cost-effective for user
+        // S = 20, T = 20, X = 17, Y = 20, Z = 21 -> Z + S + T = 45; X + Y = 37
+        assertThat(checkoutSolution.checkout("STXYZ"), equalTo(82));
     }
 }
-
-

@@ -7,4 +7,3 @@ public interface Offer {
     BigDecimal apply(Map<Character, Integer> basket, SKU sku);
     int getBundleSize();
 }
-

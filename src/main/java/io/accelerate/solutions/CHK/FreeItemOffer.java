@@ -46,4 +46,3 @@ public class FreeItemOffer implements Offer{
         return eligibilityCount;
     }
 }
-
