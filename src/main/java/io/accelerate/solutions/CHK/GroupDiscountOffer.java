@@ -38,9 +38,16 @@ public class GroupDiscountOffer implements Offer{
         int toRemove = groupDiscountCount * this.eligibleCount;
         for (char c: seen) {
             // keep decrementing basket sku count the number of times the group discount was applied
+            while(toRemove > 0 && basket.getOrDefault(c, 0) > 0) {
+                basket.put(c, basket.get(c) - 1);
+                toRemove--;
+            }
+            if (toRemove == 0) {
+                break;
+            }
         }
 
-        return BigDecimal.ZERO;
+        return totalGroupDiscount;
     }
 
     @Override
@@ -48,6 +55,7 @@ public class GroupDiscountOffer implements Offer{
         return 0;
     }
 }
+
 
 
 

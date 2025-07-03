@@ -84,12 +84,10 @@ public class CheckoutSolution {
                         .withOffer(new FreeItemOffer(3, 'Q')));
 
         catalogue.put('S',
-                new SKU('S', skuSUnitPrice)
-                        .withOffer(new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45))));
+                new SKU('S', skuSUnitPrice));
 
         catalogue.put('T',
-                new SKU('T', skuTUnitPrice)
-                        .withOffer(new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45))));
+                new SKU('T', skuTUnitPrice));
 
         catalogue.put('U',
                 new SKU('U', skuUUnitPrice)
@@ -104,16 +102,13 @@ public class CheckoutSolution {
                 new SKU('W', skuWUnitPrice));
 
         catalogue.put('X',
-                new SKU('X', skuXUnitPrice)
-                        .withOffer(new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45))));
+                new SKU('X', skuXUnitPrice));
 
         catalogue.put('Y',
-                new SKU('Y', skuYUnitPrice)
-                        .withOffer(new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45))));
+                new SKU('Y', skuYUnitPrice));
 
         catalogue.put('Z',
-                new SKU('Z', skuZUnitPrice)
-                        .withOffer(new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45))));
+                new SKU('Z', skuZUnitPrice));
 
         return catalogue;
     }
@@ -129,10 +124,15 @@ public class CheckoutSolution {
             return 0;
         }
 
+        BigDecimal totalBasketValue = BigDecimal.ZERO;
+
+        // group discount offer is applied at basket level before sku offers are applied
+        GroupDiscountOffer gdo = new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45));
+        totalBasketValue = totalBasketValue.add(gdo.apply(basket, null));
+
         // prioritize skus with free item offers
         Map<Character, Integer> sortedBasket = sortByFreeItemsOffer(basket);
 
-        BigDecimal totalBasketValue = BigDecimal.ZERO;
         for (Map.Entry<Character, Integer> basketEntry : sortedBasket.entrySet()) {
             SKU sku = this.catalogue.get(basketEntry.getKey());
             List<Offer> offers = sku.getOffers();
@@ -184,4 +184,5 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
 
