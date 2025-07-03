@@ -126,14 +126,17 @@ public class CheckoutSolution {
 
         BigDecimal totalBasketValue = BigDecimal.ZERO;
 
+        // before applying group discount offer, sort basket skus by descending order
+        // so that most expensive items are selected for discount first
+        Map<Character, Integer> basketPriceSorted = sortByUnitPrice(basket);
         // group discount offer is applied at basket level before sku offers are applied
         GroupDiscountOffer gdo = new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45));
-        totalBasketValue = totalBasketValue.add(gdo.apply(basket, null));
+        totalBasketValue = totalBasketValue.add(gdo.apply(basketPriceSorted, null));
 
         // prioritize skus with free item offers
-        Map<Character, Integer> sortedBasket = sortByFreeItemsOffer(basket);
+        Map<Character, Integer> basketOfferSorted = sortByFreeItemsOffer(basketPriceSorted);
 
-        for (Map.Entry<Character, Integer> basketEntry : sortedBasket.entrySet()) {
+        for (Map.Entry<Character, Integer> basketEntry : basketOfferSorted.entrySet()) {
             SKU sku = this.catalogue.get(basketEntry.getKey());
             List<Offer> offers = sku.getOffers();
             // prioritize offers with higher bundle count
@@ -142,7 +145,7 @@ public class CheckoutSolution {
 
             // apply all offers per sku
             for (Offer offer : offers) {
-                BigDecimal offerValue = offer.apply(sortedBasket, sku);
+                BigDecimal offerValue = offer.apply(basketOfferSorted, sku);
                 totalBasketValue = totalBasketValue.add(offerValue);
             }
             // if there are remaining quantity once all offers are applied, add them to total at regular unit price (i.e no offers)
@@ -152,6 +155,20 @@ public class CheckoutSolution {
         }
 
         return totalBasketValue.intValue();
+    }
+
+    private Map<Character, Integer> sortByUnitPrice(Map<Character, Integer> basket) {
+        List<Map.Entry<Character, Integer>> basketSkusList = new ArrayList<>(basket.entrySet());
+        basketSkusList.sort((e1, e2) -> Integer.compare(
+                this.catalogue.get(e2.getKey()).getUnitPrice().intValue(),
+                this.catalogue.get(e1.getKey()).getUnitPrice().intValue()
+        ));
+
+        Map<Character, Integer> sortedBasket = new LinkedHashMap<>(); // use LinkedHashMap to maintain ordering
+        for(Map.Entry<Character, Integer> basketSku: basketSkusList) {
+            sortedBasket.put(basketSku.getKey(), basketSku.getValue());
+        }
+        return sortedBasket;
     }
 
     private Map<Character, Integer> sortByFreeItemsOffer(Map<Character, Integer> basket) {
@@ -184,3 +201,4 @@ public class CheckoutSolution {
         return skuToCount;
     }
 }
+
