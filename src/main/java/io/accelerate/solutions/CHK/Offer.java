@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public interface Offer {
-    BigDecimal apply(Map<SKU, Integer> basket, SKU sku);
+    BigDecimal apply(Map<Character, Integer> basket, SKU sku);
     int getBundleSize();
 }
+

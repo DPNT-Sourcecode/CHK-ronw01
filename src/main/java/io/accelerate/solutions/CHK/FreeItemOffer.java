@@ -13,20 +13,20 @@ public class FreeItemOffer implements Offer{
     }
 
     @Override
-    public BigDecimal apply(Map<SKU, Integer> basket, SKU sku) {
+    public BigDecimal apply(Map<Character, Integer> basket, SKU sku) {
         // when free item is same as required item
         if (sku.getName() == freeItem) {
-            int count = basket.get(sku);
+            int count = basket.get(sku.getName());
             if (count/(eligibilityCount+1) >= 1) {
                 count -= count/(eligibilityCount+1);
-                basket.put(sku, count);
+                basket.put(sku.getName(), count);
             }
             // when free item is different to required item
         } else {
-            int totalBundleCount = basket.get(sku)/eligibilityCount;
+            int totalBundleCount = basket.get(sku.getName())/eligibilityCount;
             // we need to find the existing count of free item in the basket and decrement it by bundle count
-            for (Map.Entry<SKU, Integer> entry : basket.entrySet()) {
-                if (entry.getKey().getName() == freeItem) {
+            for (Map.Entry<Character, Integer> entry : basket.entrySet()) {
+                if (entry.getKey() == freeItem) {
                     int freeItemCountInBasket = entry.getValue() - totalBundleCount;
                     // make sure we do not extract more than existing quantity of free item in the basket
                     if(freeItemCountInBasket < 0) {
@@ -46,3 +46,4 @@ public class FreeItemOffer implements Offer{
         return eligibilityCount;
     }
 }
+

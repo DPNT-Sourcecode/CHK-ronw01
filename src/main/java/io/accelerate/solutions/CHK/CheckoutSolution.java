@@ -85,11 +85,11 @@ public class CheckoutSolution {
 
         catalogue.put('S',
                 new SKU('S', skuSUnitPrice)
-                        .withOffer(new GroupDiscountOffer(List.of('S', 'T', 'X', 'Y', 'Z'), BigDecimal.valueOf(45))));
+                        .withOffer(new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45))));
 
         catalogue.put('T',
                 new SKU('T', skuTUnitPrice)
-                        .withOffer(new GroupDiscountOffer(List.of('S', 'T', 'X', 'Y', 'Z'), BigDecimal.valueOf(45))));
+                        .withOffer(new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45))));
 
         catalogue.put('U',
                 new SKU('U', skuUUnitPrice)
@@ -105,21 +105,21 @@ public class CheckoutSolution {
 
         catalogue.put('X',
                 new SKU('X', skuXUnitPrice)
-                        .withOffer(new GroupDiscountOffer(List.of('S', 'T', 'X', 'Y', 'Z'), BigDecimal.valueOf(45))));
+                        .withOffer(new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45))));
 
         catalogue.put('Y',
                 new SKU('Y', skuYUnitPrice)
-                        .withOffer(new GroupDiscountOffer(List.of('S', 'T', 'X', 'Y', 'Z'), BigDecimal.valueOf(45))));
+                        .withOffer(new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45))));
 
         catalogue.put('Z',
                 new SKU('Z', skuZUnitPrice)
-                        .withOffer(new GroupDiscountOffer(List.of('S', 'T', 'X', 'Y', 'Z'), BigDecimal.valueOf(45))));
+                        .withOffer(new GroupDiscountOffer(Set.of('S', 'T', 'X', 'Y', 'Z'), 3, BigDecimal.valueOf(45))));
 
         return catalogue;
     }
 
     public Integer checkout(String skus) {
-        Map<SKU, Integer> basket = countSkus(skus);
+        Map<Character, Integer> basket = countSkus(skus);
 
         if (basket==null) {
             return -1;
@@ -130,11 +130,11 @@ public class CheckoutSolution {
         }
 
         // prioritize skus with free item offers
-        Map<SKU, Integer> sortedBasket = sortByFreeItemsOffer(basket);
+        Map<Character, Integer> sortedBasket = sortByFreeItemsOffer(basket);
 
         BigDecimal totalBasketValue = BigDecimal.ZERO;
-        for (Map.Entry<SKU, Integer> basketEntry : sortedBasket.entrySet()) {
-            SKU sku = basketEntry.getKey();
+        for (Map.Entry<Character, Integer> basketEntry : sortedBasket.entrySet()) {
+            SKU sku = this.catalogue.get(basketEntry.getKey());
             List<Offer> offers = sku.getOffers();
             // prioritize offers with higher bundle count
             // i.e apply '5 for 200' before '3 for 130'
@@ -154,23 +154,23 @@ public class CheckoutSolution {
         return totalBasketValue.intValue();
     }
 
-    private Map<SKU, Integer> sortByFreeItemsOffer(Map<SKU, Integer> basket) {
-        List<Map.Entry<SKU, Integer>> basketSkusList = new ArrayList<>(basket.entrySet());
+    private Map<Character, Integer> sortByFreeItemsOffer(Map<Character, Integer> basket) {
+        List<Map.Entry<Character, Integer>> basketSkusList = new ArrayList<>(basket.entrySet());
         basketSkusList.sort((e1, e2) -> Boolean.compare(
-                e2.getKey().hasFreeItemsOffer(),
-                e1.getKey().hasFreeItemsOffer()
+                this.catalogue.get(e2.getKey()).hasFreeItemsOffer(),
+                this.catalogue.get(e1.getKey()).hasFreeItemsOffer()
         ));
 
-        Map<SKU, Integer> sortedBasket = new LinkedHashMap<>(); // use LinkedHashMap to maintain ordering
-        for(Map.Entry<SKU, Integer> basketSku: basketSkusList) {
+        Map<Character, Integer> sortedBasket = new LinkedHashMap<>(); // use LinkedHashMap to maintain ordering
+        for(Map.Entry<Character, Integer> basketSku: basketSkusList) {
             sortedBasket.put(basketSku.getKey(), basketSku.getValue());
         }
         return sortedBasket;
     }
 
-    private Map<SKU, Integer> countSkus(String skus) {
+    private Map<Character, Integer> countSkus(String skus) {
         // create hashmap to store sku to count map
-        HashMap<SKU, Integer> skuToCount = new HashMap<>();
+        HashMap<Character, Integer> skuToCount = new HashMap<>();
         if (skus.isEmpty()) {
             return Collections.emptyMap();
         }
@@ -178,9 +178,10 @@ public class CheckoutSolution {
             if (c < 'A' || c > 'Z') {
                 return null;
             }
-            skuToCount.put(catalogue.get(c), skuToCount.getOrDefault(catalogue.get(c), 0) + 1);
+            skuToCount.put(catalogue.get(c).getName(), skuToCount.getOrDefault(catalogue.get(c).getName(), 0) + 1);
         }
 
         return skuToCount;
     }
 }
+

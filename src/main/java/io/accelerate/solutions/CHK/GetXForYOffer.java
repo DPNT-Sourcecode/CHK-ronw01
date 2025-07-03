@@ -13,9 +13,9 @@ public class GetXForYOffer implements Offer{
     }
 
     @Override
-    public BigDecimal apply(Map<SKU, Integer> basket, SKU sku) {
-        int totalBundleCount = basket.get(sku)/X;
-        basket.put(sku, basket.get(sku)%X); // update sku count with remaining quantity as offers are applied
+    public BigDecimal apply(Map<Character, Integer> basket, SKU sku) {
+        int totalBundleCount = basket.get(sku.getName())/X;
+        basket.put(sku.getName(), basket.get(sku.getName())%X); // update sku count with remaining quantity as offers are applied
         return Y.multiply(BigDecimal.valueOf(totalBundleCount));
     }
 
@@ -24,3 +24,4 @@ public class GetXForYOffer implements Offer{
         return X;
     }
 }
+

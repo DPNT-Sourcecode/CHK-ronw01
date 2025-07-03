@@ -29,5 +29,5 @@ public class Constants {
     public static final BigDecimal skuXUnitPrice = BigDecimal.valueOf(17);
     public static final BigDecimal skuYUnitPrice = BigDecimal.valueOf(20);
     public static final BigDecimal skuZUnitPrice = BigDecimal.valueOf(21);
-
 }
+
